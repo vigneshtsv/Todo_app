@@ -281,10 +281,11 @@ export default function TodoApp() {
         </div>
 
         {/* Footer part */}
-        <div className="text-center mt-8 text-gray-500 animate-fadeInUp">
-          <p>
-            Built by <b>Vignesh</b> codeShell Technologies
+        <div className="text-center mt-8 text-gray-500 animate-pulse hover:animate-none transition-all duration-1000 transform hover:scale-105">
+          <p className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-semibold">
+            Built by <span className="font-bold text-gray-700">Vignesh</span> codeShell Technologies
           </p>
+          <div className="mt-2 h-1 w-24 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
         </div>
       </div>
     </div>
