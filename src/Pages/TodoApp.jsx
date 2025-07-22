@@ -8,7 +8,7 @@ export default function TodoApp() {
   const [editingText, setEditingText] = useState('');
   const [filter, setFilter] = useState('all');
 
-  // Initialize with some sample todos
+  // Mock data for the initial todos
   useEffect(() => {
     const sampleTodos = [
       { id: 1, text: 'Learn React hooks ( useState, useEffect )', completed: true, createdAt: new Date().toISOString() },
@@ -17,6 +17,36 @@ export default function TodoApp() {
     ];
     setTodos(sampleTodos);
   }, []);
+
+    // Format date and time
+    const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    const timeString = date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true 
+    });
+    
+    const dateString2 = date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    });
+
+    if (diffDays === 0) {
+      return `Today at ${timeString}`;
+    } else if (diffDays === 1) {
+      return `Yesterday at ${timeString}`;
+    } else if (diffDays < 7) {
+      return `${diffDays} days ago at ${timeString}`;
+    } else {
+      return `${dateString2} at ${timeString}`;
+    }
+  };
 
   // Add new todo
   const addTodo = () => {
@@ -102,11 +132,15 @@ export default function TodoApp() {
             <div className="text-sm text-gray-600">Total</div>
           </div>
           <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600">{activeTodos}</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {activeTodos}
+            </div>
             <div className="text-sm text-gray-600">Active</div>
           </div>
           <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">{completedTodos}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {completedTodos}
+            </div>
             <div className="text-sm text-gray-600">Completed</div>
           </div>
         </div>
@@ -134,14 +168,14 @@ export default function TodoApp() {
 
         {/* Filter Buttons */}
         <div className="flex justify-center gap-2 mb-6">
-          {['all', 'active', 'completed'].map((filterType) => (
+          {["all", "active", "completed"].map((filterType) => (
             <button
               key={filterType}
               onClick={() => setFilter(filterType)}
               className={`px-4 py-2 rounded-lg capitalize transition-colors duration-200 ${
                 filter === filterType
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
             >
               {filterType}
@@ -159,14 +193,17 @@ export default function TodoApp() {
           ) : (
             <div className="divide-y divide-gray-200">
               {filteredTodos.map((todo) => (
-                <div key={todo.id} className="p-4 flex items-center gap-3 hover:bg-gray-50 transition-colors duration-200">
+                <div
+                  key={todo.id}
+                  className="p-4 flex items-center gap-3 hover:bg-gray-50 transition-colors duration-200"
+                >
                   {/* Checkbox */}
                   <button
                     onClick={() => toggleTodo(todo.id)}
                     className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
                       todo.completed
-                        ? 'bg-green-500 border-green-500 text-white'
-                        : 'border-gray-300 hover:border-green-400'
+                        ? "bg-green-500 border-green-500 text-white"
+                        : "border-gray-300 hover:border-green-400"
                     }`}
                   >
                     {todo.completed && <Check size={16} />}
@@ -184,15 +221,18 @@ export default function TodoApp() {
                         autoFocus
                       />
                     ) : (
-                      <span
-                        className={`text-lg ${
-                          todo.completed
-                            ? 'text-gray-500 line-through'
-                            : 'text-gray-800'
-                        }`}
-                      >
-                        {todo.text}
-                      </span>
+                      <div className="flex flex-col">
+                        <span
+                          className={`text-lg ${
+                            todo.completed
+                              ? "text-gray-500 line-through"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {todo.text}
+                        </span>
+                        <span>{formatDateTime(todo.createdAt)}</span>
+                      </div>
                     )}
                   </div>
 
@@ -240,9 +280,11 @@ export default function TodoApp() {
           )}
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-8 text-gray-500">
-          <p>Built by <b>Vignesh</b> with React & Tailwind CSS</p>
+        {/* Footer part */}
+        <div className="text-center mt-8 text-gray-500 animate-fadeInUp">
+          <p>
+            Built by <b>Vignesh</b> codeShell Technologies
+          </p>
         </div>
       </div>
     </div>
