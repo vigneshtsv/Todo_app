@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Check, X, Save } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 export default function TodoApp() {
   const [todos, setTodos] = useState([]);
@@ -59,13 +60,15 @@ export default function TodoApp() {
       };
       setTodos([...todos, todo]);
       setNewTodo('');
+      toast.success('Todo added successfully!');
     }
   };
 
   // Delete todo
   const deleteTodo = (id) => {
     setTodos(todos.filter(todo => todo.id !== id));
-  };
+    toast.success('Todo deleted successfully!')
+  }
 
   // Toggle todo completion
   const toggleTodo = (id) => {
@@ -89,6 +92,7 @@ export default function TodoApp() {
     }
     setEditingId(null);
     setEditingText('');
+    toast.success('Todo updated successfully!');
   };
 
   // Cancel edit
@@ -281,7 +285,7 @@ export default function TodoApp() {
         </div>
 
         {/* Footer part */}
-        <div className="text-center mt-8 text-gray-500 animate-pulse hover:animate-none transition-all duration-1000 transform hover:scale-105">
+        <div className="text-center mt-8 text-gray-500 animate-bounce hover:animate-none transition-all duration-1000 transform hover:scale-105">
           <p className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent font-semibold">
             Built by <span className="font-bold text-gray-700">Vignesh</span> codeShell Technologies
           </p>
